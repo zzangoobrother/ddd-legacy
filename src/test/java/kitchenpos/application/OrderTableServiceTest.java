@@ -3,10 +3,9 @@ package kitchenpos.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import kitchenpos.application.fixture.OrderTableFixture;
 import kitchenpos.domain.InMemoryOrderRepository;
 import kitchenpos.domain.InMemoryOrderTableRepository;
-import java.util.Optional;
-import kitchenpos.application.fixture.OrderTableFixture;
 import kitchenpos.domain.OrderRepository;
 import kitchenpos.domain.OrderTable;
 import kitchenpos.domain.OrderTableRepository;

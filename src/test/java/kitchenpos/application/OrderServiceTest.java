@@ -3,8 +3,6 @@ package kitchenpos.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.List;
-import java.util.Optional;
 import kitchenpos.application.fixture.MenuFixture;
 import kitchenpos.application.fixture.OrderFixture;
 import kitchenpos.application.fixture.OrderTableFixture;
@@ -12,17 +10,13 @@ import kitchenpos.domain.InMemoryMenuRepository;
 import kitchenpos.domain.InMemoryOrderRepository;
 import kitchenpos.domain.InMemoryOrderTableRepository;
 import kitchenpos.domain.Menu;
-import kitchenpos.domain.MenuGroup;
-import kitchenpos.domain.MenuProduct;
 import kitchenpos.domain.MenuRepository;
 import kitchenpos.domain.Order;
-import kitchenpos.domain.OrderLineItem;
 import kitchenpos.domain.OrderRepository;
 import kitchenpos.domain.OrderStatus;
 import kitchenpos.domain.OrderTable;
 import kitchenpos.domain.OrderTableRepository;
 import kitchenpos.domain.OrderType;
-import kitchenpos.domain.Product;
 import kitchenpos.infra.KitchenridersClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,14 +32,7 @@ class OrderServiceTest {
 
   private OrderService orderService;
 
-  private MenuGroup 추천메뉴;
-  private Product 강정치킨;
-  private OrderTable 테이블_1번;
   private Menu menu;
-
-  private MenuProduct menuProduct;
-
-  private OrderLineItem orderLineItem;
 
   private Order orderEatIn;
   private Order orderTakeOut;
@@ -60,15 +47,20 @@ class OrderServiceTest {
 
     orderService = new OrderService(orderRepository, menuRepository, orderTableRepository, kitchenridersClient);
 
-    테이블_1번 = OrderTableFixture.createOrderTable();
-
     menu = MenuFixture.createMenu();
+    Menu saveMenu = menuRepository.save(menu);
+
+    OrderTable saveOrderTable = orderTableRepository.save(OrderTableFixture.createOrderTable());
 
     orderEatIn = OrderFixture.createOrderEatIn();
+    orderEatIn.getOrderLineItems().get(0).setMenuId(saveMenu.getId());
+    orderEatIn.setOrderTableId(saveOrderTable.getId());
 
     orderTakeOut = OrderFixture.createOrderTakeOut();
+    orderTakeOut.getOrderLineItems().get(0).setMenuId(saveMenu.getId());
 
     orderDelivery = OrderFixture.createOrderDelivery();
+    orderDelivery.getOrderLineItems().get(0).setMenuId(saveMenu.getId());
   }
 
   @DisplayName("주문 매장식사 등록")

@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 class MenuGroupServiceTest {
 
   private MenuGroupRepository menuGroupRepository;
-
   private MenuGroupService menuGroupService;
 
   private MenuGroup menuGroup;
@@ -25,8 +24,7 @@ class MenuGroupServiceTest {
     menuGroupRepository = new InMemoryMenuGroupRepository();
     menuGroupService = new MenuGroupService(menuGroupRepository);
 
-    menuGroup = new MenuGroup();
-    menuGroup.setName("추천메뉴");
+    menuGroup = MenuGroupFixture.createMenuGroup();
   }
 
   @DisplayName("메뉴 그룹 등록")

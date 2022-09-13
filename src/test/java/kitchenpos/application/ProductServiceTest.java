@@ -4,12 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.math.BigDecimal;
+import kitchenpos.application.fixture.ProductFixture;
 import kitchenpos.domain.FakeProfanityClient;
 import kitchenpos.domain.InMemoryMenuRepository;
 import kitchenpos.domain.InMemoryProductRepository;
-import java.util.List;
-import java.util.Optional;
-import kitchenpos.application.fixture.ProductFixture;
 import kitchenpos.domain.MenuRepository;
 import kitchenpos.domain.Product;
 import kitchenpos.domain.ProductRepository;

@@ -19,6 +19,8 @@ public class MenuFixture {
     menu.setPrice(BigDecimal.valueOf(price));
     menu.setDisplayed(true);
     menu.setMenuProducts(List.of(menuProducts));
+    menu.setMenuGroup(MenuGroupFixture.createMenuGroup());
+    menu.setMenuGroupId(MenuGroupFixture.createMenuGroup().getId());
 
     return menu;
   }

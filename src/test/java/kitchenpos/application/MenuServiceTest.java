@@ -5,15 +5,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.math.BigDecimal;
 import java.util.List;
+import kitchenpos.application.fixture.MenuFixture;
+import kitchenpos.application.fixture.MenuProductFixture;
 import kitchenpos.domain.FakeProfanityClient;
 import kitchenpos.domain.InMemoryMenuGroupRepository;
 import kitchenpos.domain.InMemoryMenuRepository;
 import kitchenpos.domain.InMemoryProductRepository;
-import java.util.Optional;
-import kitchenpos.application.fixture.MenuFixture;
-import kitchenpos.application.fixture.MenuGroupFixture;
-import kitchenpos.application.fixture.MenuProductFixture;
-import kitchenpos.application.fixture.ProductFixture;
 import kitchenpos.domain.Menu;
 import kitchenpos.domain.MenuGroup;
 import kitchenpos.domain.MenuGroupRepository;
@@ -36,8 +33,6 @@ class MenuServiceTest {
 
   private MenuService menuService;
 
-  private Product product;
-  private MenuGroup menuGroup;
   private MenuProduct menuProduct;
   private Menu menu;
 
@@ -50,9 +45,15 @@ class MenuServiceTest {
     menuService = new MenuService(menuRepository, menuGroupRepository, productRepository, profanityClient);
 
     menu = MenuFixture.createMenu();
-    product = ProductFixture.createProduct();
-    menuGroup = MenuGroupFixture.createMenuGroup();
-    menuProduct = MenuProductFixture.createMenuProduct();
+    menuProduct = menu.getMenuProducts().get(0);
+
+    MenuGroup saveMenuGroup = menuGroupRepository.save(menu.getMenuGroup());
+    menu.setMenuGroup(saveMenuGroup);
+    menu.setMenuGroupId(saveMenuGroup.getId());
+
+    Product saveProduct = productRepository.save(menuProduct.getProduct());
+    menuProduct.setProduct(saveProduct);
+    menuProduct.setProductId(saveProduct.getId());
   }
 
   @DisplayName("메뉴 등록")
